@@ -426,6 +426,7 @@ footer{padding:36px 0;display:flex;justify-content:space-between;align-items:cen
 })();
 
 (function(){
+  var WEB3FORMS_KEY='3d64325b-3d0c-4d56-890f-fc83592b4473';
   var form=document.getElementById('contactForm');
   form.addEventListener('submit',function(e){
     e.preventDefault();
@@ -434,8 +435,23 @@ footer{padding:36px 0;display:flex;justify-content:space-between;align-items:cen
     var message=document.getElementById('cf-message').value;
     var subject='New inquiry from '+name;
     var body=message+'\n\nFrom: '+name+' ('+email+')';
-    var mailto='mailto:chrisgurtlinger@mac.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-    window.location.href=mailto;
+    var btn=form.querySelector('button[type="submit"]');
+    var label=btn.textContent;
+    var status=form.querySelector('.form-status');
+    if(!status){status=document.createElement('p');status.className='form-status';status.setAttribute('role','status');status.style.cssText='margin-top:14px;font-size:.95rem;';form.appendChild(status);}
+    status.textContent='';
+    btn.disabled=true;btn.textContent='Sending\u2026';
+    fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:subject,from_name:name,replyto:email,email:email,message:body})
+    }).then(function(r){return r.json();}).then(function(d){
+      if(!d.success){throw new Error(d.message||'Send failed');}
+      form.reset();btn.textContent='Message sent';status.textContent='Thanks! Your message is on its way.';setTimeout(function(){btn.disabled=false;btn.textContent=label;},4000);
+    }).catch(function(){
+      btn.disabled=false;btn.textContent=label;
+      status.textContent='Sorry, your message didn\u2019t go through. Please try again, or email chrisgurtlinger@mac.com directly.';
+    });
   });
 })();
 
