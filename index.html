@@ -154,10 +154,16 @@ section{padding:60px 0;}
 
 /* ---------- about ---------- */
 .about-grid{display:grid;grid-template-columns:300px 1fr;gap:52px;align-items:start;}
-.about-photo{overflow:hidden;aspect-ratio:3/4;}
-.about-photo img{width:100%;height:100%;object-fit:cover;display:block;
-  -webkit-mask-image:radial-gradient(ellipse farthest-side at center, rgba(0,0,0,1) 62%, rgba(0,0,0,0) 100%);
-  mask-image:radial-gradient(ellipse farthest-side at center, rgba(0,0,0,1) 62%, rgba(0,0,0,0) 100%);}
+.about-photo{overflow:hidden;aspect-ratio:3/4;position:relative;border-radius:50%;
+  -webkit-mask-image:radial-gradient(ellipse closest-side at center, #000 calc(100% - 40px), transparent 100%);
+  mask-image:radial-gradient(ellipse closest-side at center, #000 calc(100% - 40px), transparent 100%);}
+.about-photo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(to right, var(--ink), transparent) left / 100px 100% no-repeat,
+    linear-gradient(to left, var(--ink), transparent) right / 100px 100% no-repeat,
+    linear-gradient(to bottom, var(--ink), transparent) top / 100% 50px no-repeat,
+    linear-gradient(to top, var(--ink), transparent) bottom / 100% 50px no-repeat;}
+.about-photo img{width:100%;height:100%;object-fit:cover;object-position:28% 50%;display:block;}
 .stat{font-family:var(--display);font-size:clamp(4rem,9vw,6.4rem);line-height:.9;}
 .stat-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;
   color:var(--chalk-faint);text-transform:uppercase;max-width:280px;margin-top:14px;margin-bottom:32px;}
@@ -390,10 +396,6 @@ footer{padding:36px 0;display:flex;justify-content:space-between;align-items:cen
         <div class="price-card">
           <span class="price-badge">50% off</span>
           <h3>Social Basic</h3>
-          <div class="price-row">
-            <span class="price-now">$500</span>
-            <span class="price-was">$1,000</span>
-          </div>
           <ul class="price-features">
             <li>1 shoot day</li>
             <li>Your pick of 4 products or services to highlight</li>
@@ -404,10 +406,6 @@ footer{padding:36px 0;display:flex;justify-content:space-between;align-items:cen
         <div class="price-card">
           <span class="price-badge">50% off</span>
           <h3>Social Premium</h3>
-          <div class="price-row">
-            <span class="price-now">$1,000</span>
-            <span class="price-was">$2,000</span>
-          </div>
           <ul class="price-features">
             <li>2 shoot days</li>
             <li>Your pick of 8 products or services to highlight</li>
@@ -418,10 +416,6 @@ footer{padding:36px 0;display:flex;justify-content:space-between;align-items:cen
         <div class="price-card">
           <span class="price-badge">50% off</span>
           <h3>Product Video Package</h3>
-          <div class="price-row">
-            <span class="price-now">$4,000</span>
-            <span class="price-was">$8,000</span>
-          </div>
           <ul class="price-features">
             <li>1 shoot day</li>
             <li>4 product videos for up to 4 products</li>
@@ -433,10 +427,6 @@ footer{padding:36px 0;display:flex;justify-content:space-between;align-items:cen
         <div class="price-card">
           <span class="price-badge">50% off</span>
           <h3>Marketing Package</h3>
-          <div class="price-row">
-            <span class="price-now">$7,500</span>
-            <span class="price-was">$15,000</span>
-          </div>
           <ul class="price-features">
             <li>1 shoot day</li>
             <li>Up to 2 actors</li>
